@@ -1,0 +1,33 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r }
+library(knitr)
+sample.a = iris$Sepal.Length
+sample.b = iris$Sepal.Width
+name.a = "A"
+name.b = "B"
+
+d <-rbind( c(name.a, summary(sample.a)), 
+           c(name.b, summary(sample.b)) )
+
+kable(d
+      , caption = "Descriptive statistic"
+      , row.names = F
+      , align = "c"
+      , digits = 3)
+
+result.1 = round(cor.test(sample.a, sample.b)$estimate, 4)
+result.2 = round(cor.test(sample.a, sample.b)$p.value, 4)
+
+d <- cbind(d, c(result.1,"")); colnames(d)[length(colnames(d))] <- "r"
+d <- cbind(d, c(result.2,"")); colnames(d)[length(colnames(d))] <- "p-value"
+
+kable(d
+      , caption = "Hypothesis testing"
+      , row.names = F
+      , align = "c"
+      , digits = 3)
+```
