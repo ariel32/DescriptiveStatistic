@@ -3,7 +3,7 @@ title: "Untitled"
 output: html_document
 ---
 
-```{r }
+```{r, echo=FALSE}
 library(knitr)
 sample.a = iris$Sepal.Length
 sample.b = iris$Sepal.Width
