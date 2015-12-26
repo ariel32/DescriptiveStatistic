@@ -30,4 +30,32 @@ kable(d
       , row.names = F
       , align = "c"
       , digits = 3)
+
+
+sample.a <- iris[which(iris$Species == "virginica"),]
+sample.b <- iris[which(iris$Species == "versicolor"),]
+s.names <- names(iris)
+p.vals <- vector(); sa.summary <- vector(); sb.summary <- vector()
+for(x in s.names) {
+  p.vals <- append(p.vals,
+                   wilcox.test(as.numeric(unlist(sample.a[x])),
+                               as.numeric(unlist(sample.b[x])))$p.value)
+  p.vals <- round(p.vals,4)
+  sa.summary <- append(sa.summary, sprintf("%s±%s",
+                                           round(mean(as.numeric(unlist(sample.a[x]))),4),
+                                           round(sd(as.numeric(unlist(sample.a[x]))),4)))
+  sb.summary <- append(sb.summary, sprintf("%s±%s",
+                                           round(mean(as.numeric(unlist(sample.b[x]))),4),
+                                           round(sd(as.numeric(unlist(sample.b[x]))),4)))
+}
+p.vals[which(p.vals == 0)] <- "< 0.001"
+d <- as.data.frame(rbind(sa.summary, sb.summary, p.vals))
+colnames(d) <- s.names
+rownames(d) <- c("A", "B", "p.val")
+kable(d
+      , caption = "Vertical comparison"
+      , align = "c"
+      , digits = 4)
+
+
 ```
